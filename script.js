@@ -4,7 +4,8 @@ let circles;
 
 window.onload = function() {
     setup();
-    setInterval(draw, 1000 / 40);
+    //setInterval(draw, 1000 / 40);
+    requestanimationframe(draw)b
 }
 
 function setup() {
@@ -91,7 +92,8 @@ function draw() {
     ctx.beginPath();
     ctx.strokeStyle = "lime";
     for (let i = 0; i < wave.length; i++) {
-        ctx.moveTo(600 + 2 * i, wave[i]);
+        if (i==0) ctx.moveTo(600 + 2 * i, wave[i]);
+        else ctx.moveTo(600 + 2 * (i-1), wave[i-1]);
         ctx.lineTo(600 + 2 * i, wave[i] + 1);
         ctx.stroke();
     }
@@ -101,4 +103,5 @@ function draw() {
     }
 
     time += -0.05;
+    requestanimationframe(draw);
 }
