@@ -2,12 +2,6 @@ let time = 0;
 let wave = [];
 let circles;
 
-window.onload = function() {
-    setup();
-    //setInterval(draw, 1000 / 40);
-    requestAnimationFrame(draw);
-};
-
 function setup() {
     cnv = document.querySelector("#canvas");
     cnv.width = 1200;
@@ -17,34 +11,17 @@ function setup() {
 }
 
 function draw() {
-    circles = document.querySelector("#circles").value;
-    if (circles > 10) circles = 10;
-    if (circles < 0) circles = 0;
+    if (circles != document.querySelector("#circles").value) {
+        circles = document.querySelector("#circles").value;
+        if (circles > 100) circles = 100;
+        if (circles < 0) circles = 0;
+        time = 0;
+        wave = [];
+        setup();
+    }
 
     ctx.clearRect(0, 0, cnv.width, cnv.height);
-
-    ctx.beginPath();
-
-    ctx.moveTo(0, (cnv.height * 1) / 6);
-    ctx.lineTo(cnv.width, (cnv.height * 1) / 6);
-    ctx.moveTo(0, (cnv.height * 2) / 6);
-    ctx.lineTo(cnv.width, (cnv.height * 2) / 6);
-    ctx.moveTo(0, (cnv.height * 4) / 6);
-    ctx.lineTo(cnv.width, (cnv.height * 4) / 6);
-    ctx.moveTo(0, (cnv.height * 5) / 6);
-    ctx.lineTo(cnv.width, (cnv.height * 5) / 6);
-
-    ctx.moveTo((cnv.width * 1) / 6, 0);
-    ctx.lineTo((cnv.width * 1) / 6, cnv.height);
-    ctx.moveTo((cnv.width * 2) / 6, 0);
-    ctx.lineTo((cnv.width * 2) / 6, cnv.height);
-    ctx.moveTo((cnv.width * 4) / 6, 0);
-    ctx.lineTo((cnv.width * 4) / 6, cnv.height);
-    ctx.moveTo((cnv.width * 5) / 6, 0);
-    ctx.lineTo((cnv.width * 5) / 6, cnv.height);
-
-    ctx.strokeStyle = "rgb(10, 60, 60)";
-    ctx.stroke();
+    setBackground();
 
     ctx.beginPath();
 
@@ -90,16 +67,44 @@ function draw() {
     ctx.beginPath();
     ctx.strokeStyle = "lime";
     for (let i = 0; i < wave.length; i++) {
-        if (i == 0) ctx.moveTo(600 + 2 * i, wave[i]);
-        else ctx.moveTo(600 + 2 * (i - 1), wave[i - 1]);
-        ctx.lineTo(600 + 2 * i, wave[i] + 1);
+        if (i == 0) ctx.moveTo(600 + 4 * i, wave[i]);
+        else ctx.moveTo(600 + 4 * (i - 1), wave[i - 1]);
+        ctx.lineTo(600 + 4 * i, wave[i] + 1);
         ctx.stroke();
     }
 
-    if (wave.length > 200) {
+    if (wave.length > 100) {
         wave.pop();
     }
 
-    time += -0.05;
+    time += -0.1;
     requestAnimationFrame(draw);
 }
+
+function setBackground() {
+    ctx.beginPath();
+
+    ctx.moveTo(0, (cnv.height * 1) / 6);
+    ctx.lineTo(cnv.width, (cnv.height * 1) / 6);
+    ctx.moveTo(0, (cnv.height * 2) / 6);
+    ctx.lineTo(cnv.width, (cnv.height * 2) / 6);
+    ctx.moveTo(0, (cnv.height * 4) / 6);
+    ctx.lineTo(cnv.width, (cnv.height * 4) / 6);
+    ctx.moveTo(0, (cnv.height * 5) / 6);
+    ctx.lineTo(cnv.width, (cnv.height * 5) / 6);
+
+    ctx.moveTo((cnv.width * 1) / 6, 0);
+    ctx.lineTo((cnv.width * 1) / 6, cnv.height);
+    ctx.moveTo((cnv.width * 2) / 6, 0);
+    ctx.lineTo((cnv.width * 2) / 6, cnv.height);
+    ctx.moveTo((cnv.width * 4) / 6, 0);
+    ctx.lineTo((cnv.width * 4) / 6, cnv.height);
+    ctx.moveTo((cnv.width * 5) / 6, 0);
+    ctx.lineTo((cnv.width * 5) / 6, cnv.height);
+
+    ctx.strokeStyle = "rgb(10, 60, 60)";
+    ctx.stroke();
+}
+
+setup();
+requestAnimationFrame(draw);
