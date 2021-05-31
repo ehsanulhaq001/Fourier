@@ -5,7 +5,7 @@ let circles;
 window.onload = function() {
     setup();
     //setInterval(draw, 1000 / 40);
-    requestanimationframe(draw)b
+    requestanimationframe(draw);
 }
 
 function setup() {
